@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const apiRoutes = require('./routes/api-routes');
+const htmlRoutes = require('./routes/html-routes');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -19,5 +20,6 @@ app.set('view engine', '.hbs');
 
 // Setup routes
 app.use(apiRoutes);
+app.use(htmlRoutes);
 
 app.listen(PORT, () => { console.log(`Server listening on port ${PORT}`) });
