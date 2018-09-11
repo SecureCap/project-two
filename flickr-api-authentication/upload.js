@@ -1,7 +1,9 @@
 var Flickr = require('flickrapi');
 
-var request = require('request');
+var Request = require('../lib/request').Request;
 var validate = require('validate');
+
+var xml = require('../plugins/xml');
 
 
 
@@ -33,3 +35,37 @@ upload.then(function (res) {
 }).catch(function (err) {
   console.log('err', err);
 });
+
+/*
+Creates a new upload service instance. Since the Upload Api only does one thing (upload files), an Upload instance is simply
+a request subclass.
+The upload endpoint requires authentication. You should pass a confirgured instance of the [OAuth plugin]{@link Flickr.OAuth.createPlugin}
+to upload photos on behalf of another user
+*/
+
+function Upload(auth, file, args) {
+
+  // allow creating a client without `new`
+  if (!(this instanceof Upload)) {
+    return new Upload(auth, file, args);
+  }
+
+  Request.call(this, 'POST', 'https://up.flickr.com/services/upload');
+
+  if (typeof auth !== 'function') {
+    throw new Error('Missing required argument "auth"');
+  }
+
+  if (typeof args === 'undefined') {
+    args = {};
+  }
+
+  this.attach('photo', file);
+  this.field(args);
+  this.use(xml);
+  this.use(auth);
+}
+
+Upload.prototype = Object.create(Request.prototype);
+
+module.exports = Upload;

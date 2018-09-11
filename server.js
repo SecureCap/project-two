@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Serve static content from the public directory
-app.use(express.static('public'));
+app.use(express.static('/public'));
 
 // Setup body-parser
 app.use(bodyParser.urlencoded({extended: true})); 

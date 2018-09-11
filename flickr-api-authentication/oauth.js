@@ -2,6 +2,9 @@ var Flickr = require('flickrapi');
 var http = require('http');
 var parse = require('url').parse;
 
+var request = require('../lib/request');
+var oauth = require('../plugins/oauth');
+
 
 
 var oauth = new Flickr.OAuth(
@@ -107,3 +110,93 @@ http.createServer(function (req, res) {
 }).listen(3000, function () {
   console.log('Open your browser to http://localhost:3000');
 });
+
+//Creates a new Oauth service instance. you can use this service to request and validate oauth tokens, as well as generate auth plugin suitable for use with the REST and Upload services.
+
+
+function OAuth(consumerKey, consumerSecret) {
+
+  // allow creating a client without `new`
+  if (!(this instanceof OAuth)) {
+    return new OAuth(consumerKey, consumerSecret);
+  }
+
+  if (!consumerKey) {
+    throw new Error('Missing required argument "consumerKey"');
+  }
+  if (!consumerSecret) {
+    throw new Error('Missing required argument "consumerSecret"');
+  }
+
+  this.consumerKey = consumerKey;
+  this.consumerSecret = consumerSecret;
+}
+
+//get request token using the consumer key
+
+OAuth.prototype.request = function (oauthCallback) {
+  return request('GET', 'https://www.flickr.com/services/oauth/request_token')
+    .query({ oauth_callback: oauthCallback })
+    .parse(this.parse)
+    .use(oauth(this.consumerKey, this.consumerSecret, false, false));
+
+  /*
+		TODO 'https://www.flickr.com/services/oauth/authorize?oauth_token=' + res.body.oauth_token
+	*/
+
+};
+
+//returns the authorization url for 'requesttoken' you may also pass the perms your app is requesting as 'read' (the default), 'write', or 'delete', Your application should redirect the user here to ask them to verify your request token
+
+OAuth.prototype.authorizeUrl = function (requestToken, perms) {
+  if (typeof perms !== 'string') {
+    perms = 'read';
+  }
+
+  switch (perms) {
+  case 'read':
+  case 'write':
+  case 'delete':
+    return 'https://www.flickr.com/services/oauth/authorize?perms=' + perms + '&oauth_token=' + encodeURIComponent(requestToken);
+  default:
+    throw new Error('Unknown oauth perms "' + perms + '"');
+  }
+};
+
+//verify an Oauth token using the verifier and token secret. If your user has indeed verified your request token, you will receive an OAuth token and secret back, as well as some very basic profile information. You can now use this token and secret to make calls to the REST API
+
+OAuth.prototype.verify = function (oauthToken, oauthVerifier, tokenSecret) {
+  return request('GET', 'https://www.flickr.com/services/oauth/access_token')
+    .query({ oauth_verifier: oauthVerifier })
+    .parse(this.parse)
+    .use(oauth(this.consumerKey, this.consumerSecret, oauthToken, tokenSecret));
+
+  /*
+		TODO hand back a new Flickr instance with the oauth plugin set up?
+	*/
+};
+
+//for some oauth endpoints, the api returns the content-type as "text/plain;charser=UTF-8" when really it should be
+//"application/x-www-form-urlencoded". This gets simply returns the superagent standard form/urlencoded parser
+
+OAuth.prototype.parse = request.parse['application/x-www-form-urlencoded'];
+
+//returns an oauth plugin for this consumer key and secret.
+
+OAuth.prototype.plugin = function (oauthToken, oauthTokenSecret) {
+  return oauth(this.consumerKey, this.consumerSecret, oauthToken, oauthTokenSecret);
+};
+
+//returns an oauth plugin for this consumer key, consumer secret, oauth token and oauth token secret
+
+OAuth.createPlugin = function (consumerKey, consumerSecret, oauthToken, oauthTokenSecret) {
+  return (new this(
+    consumerKey,
+    consumerSecret
+  )).plugin(
+    oauthToken,
+    oauthTokenSecret
+  );
+};
+
+module.exports = OAuth;
