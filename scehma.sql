@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS focus;
+CREATE DATABASE focus;
+USE focus;
