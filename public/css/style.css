@@ -1,0 +1,19 @@
+/* body and main below are for sticky footer */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.nav {
+    background-color: #42a5f5 !important;
+}
+
+.map {
+    width: 100%;
+    height: auto;
+}
