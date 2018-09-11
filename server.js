@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const apiRoutes = require('./routes/api-routes');
 const htmlRoutes = require('./routes/html-routes');
+const db = require('./models');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -22,4 +23,9 @@ app.set('view engine', '.hbs');
 app.use(apiRoutes);
 app.use(htmlRoutes);
 
-app.listen(PORT, () => { console.log(`Server listening on port ${PORT}`) });
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync({ force: true }).then(() => {
+    app.listen(PORT, () => { console.log(`Server listening on port ${PORT}`) });
+});
+
