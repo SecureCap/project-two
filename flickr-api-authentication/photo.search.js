@@ -1,4 +1,4 @@
-var Flickr = require('..');
+var Flickr = require('flickrapi');
 
 
 // create a new Flickr API client. since we're requesting a

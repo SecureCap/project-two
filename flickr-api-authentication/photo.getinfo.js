@@ -1,4 +1,4 @@
-var Flickr = require('..');
+var Flickr = require('flickrapi');
 
 /**
  *  public REST API methods:
@@ -21,3 +21,5 @@ flickr.photos.getInfo({
 }).catch(function (err) {
   console.error('bonk', err);
 });
+
+//exports.FlickrAPI = flickrAPI;

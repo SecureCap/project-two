@@ -1,4 +1,4 @@
-var Flickr = require('..');
+var Flickr = require('flickrapi');
 var http = require('http');
 var parse = require('url').parse;
 

@@ -1,5 +1,5 @@
 
-var Flickr = require('..');
+var Flickr = require('flickrapi');
 
 // create a new feeds instance
 var feeds = new Flickr.Feeds();

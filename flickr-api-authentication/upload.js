@@ -1,4 +1,7 @@
-var Flickr = require('..');
+var Flickr = require('flickrapi');
+
+var request = require('request');
+var validate = require('validate');
 
 
 

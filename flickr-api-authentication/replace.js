@@ -1,4 +1,4 @@
-var Flickr = require('..');
+var Flickr = require('flickrapi');
 
 
 
