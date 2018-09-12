@@ -14,34 +14,22 @@
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <title>Focus | Vantage Collecting Community</title>
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container.main {
+            flex: 1 0 auto;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="">
-        <nav class="blue lighten-2">
-            <div class="nav-wrapper container">
-                <a href="#" class="brand-logo">Logo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="sass.html">Logged in as:</a></li>
-                    <li><a href="badges.html">Profile</a></li>
-                    {{!-- <li><a href="collapsible.html">JavaScript</a></li> --}}
-                </ul>
-            </div>
-        </nav>
-        <div>
-
-        </div>
-
-
-
-        {{{ body }}}
-
-        {{#> footer}}
-        {{!-- {{> includes/footer }} --}}
-        {{/ footer}}
-    </div>
-
-
+    {{{ body }}}
 </body>
 
 </html>
