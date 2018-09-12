@@ -7,9 +7,7 @@ const db = require('./models');
 const PORT = process.env.PORT || 3000;
 
 
-Flickr.authenticate(flickrOptions, function(error, flickr) {
-  // we can now use "flickr" as our API object
-});
+
 
 const app = express();
 
