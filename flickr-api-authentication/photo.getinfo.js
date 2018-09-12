@@ -1,5 +1,3 @@
-var Flickr = require('flickrapi');
-
 /**
  *  public REST API methods:
  * https://www.flickr.com/services/api/

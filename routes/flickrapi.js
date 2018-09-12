@@ -21,12 +21,6 @@ API URL: http://127.0.0.1:3000/service/rest/flickr.method.name
 
 
 
-router.get("/api/gallery",(req, res) => {
-    res.send("muahahahaha TO BE DEVELOPED!!")
- });
-
-
- module.exports = router;
 
 
 

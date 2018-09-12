@@ -1,6 +1,3 @@
-var Flickr = require('flickrapi');
-
-
 // create a new Flickr API client. since we're requesting a
 // resource that doesn't require user authentication, we can
 // just use our API key.

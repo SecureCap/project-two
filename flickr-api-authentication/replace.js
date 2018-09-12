@@ -1,4 +1,5 @@
-var Flickr = require('flickrapi');
+var Request = require('../lib/request').Request
+var xml = require('../plugins/xml');
 
 
 
@@ -35,3 +36,41 @@ replace.then(function (res) {
 	console.log('res', res.body);
 }).catch(function (err) {
 	console.log('err', err);
+
+/* 
+creates a new replace service instance. Since the replace api only does one thing (replace files), an Replace instance is simply a request subclass
+the replace endpoint requires authentication. you should pass a configured instance of the [OAuth plugin]{@link Flickr.OAuth.createPlugin} to replace photos on behalf
+of another user
+*/
+
+function Replace(auth, photoID, file, args) {
+
+	// allow creating a client without `new`
+	if (!(this instanceof Replace)) {
+		return new Replace(auth, photoID, file, args);
+	}
+
+	Request.call(this, 'POST', 'https://up.flickr.com/services/replace');
+
+	if (typeof auth !== 'function') {
+		throw new Error('Missing required argument "auth"');
+	}
+
+	if (typeof photoID === 'undefined') {
+		throw new Error('Missing required argument "photoID"');
+	}
+
+	if (typeof args === 'undefined') {
+		args = {};
+	}
+
+	this.attach('photo', file);
+	this.field('photo_id', photoID);
+	this.field(args);
+	this.use(xml);
+	this.use(auth);
+}
+
+Replace.prototype = Object.create(Request.prototype);
+
+module.exports = Replace;

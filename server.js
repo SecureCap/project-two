@@ -10,6 +10,9 @@ const helmet = require('helmet');
 const db = require('./models');
 const PORT = process.env.PORT || 3000;
 
+
+
+
 const app = express();
 
 // Put on your helmet and buckle up bub.
@@ -19,7 +22,7 @@ app.use(helmet());
 app.use(cors());
 
 // Serve static content from the public directory
-app.use(express.static('public'));
+app.use(express.static('/public'));
 
 // Setup body-parser
 app.use(bodyParser.urlencoded({extended: true})); 
