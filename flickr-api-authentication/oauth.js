@@ -1,4 +1,12 @@
-var Flickr = require('flickrapi');
+var Flickr = require('flickrapi'),
+  flickrOptions = {
+    api_key: '0bcc8225757ff024f45d0b16c6718031',
+    secret: 'e709b11b283d4dcc'
+  };
+
+Flickr.authenticate(flickrOptions, function(error, flickr) {
+  // we can now use "flickr" as our API object
+});
 var http = require('http');
 var parse = require('url').parse;
 
