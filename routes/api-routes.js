@@ -81,10 +81,10 @@ function getApiKeys(callback, errorcallback) {
     });
 }
 //setup logger
-router.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+// router.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
 //serve static assets
-router.use(express.static(path.resolve(__dirname, "..", 'build')));
+// router.use(express.static(path.resolve(__dirname, "..", 'build')));
 
 //searches flickr for a specific query
 router.get('/flickr/:query', function (req, res) {
@@ -121,10 +121,6 @@ router.get('/flickr/:query', function (req, res) {
     })
 });
 
-//Always return the main index.hbs, so render the route in the client
-router.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.hbs'));
-})
 
 
 
