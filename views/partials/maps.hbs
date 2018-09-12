@@ -2,6 +2,7 @@
     #map {
         height: 100%;
     }
+
     html,
     body {
         height: 100%;
@@ -38,6 +39,10 @@
             } else {
                 handleLocationError(false, infoWindow, map.getCenter());
             }
+
+            var script = document.createElement('script');
+            script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -47,7 +52,17 @@
                 'Error: Your browser doesn\'t support geolocation.');
             infoWindow.open(map);
         }
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVf591AZ-evHODFReCvcQ56eAJZecmLgc&callback=initMap">
+
+        window.eqfeed_callback = function (results) {
+            for (var i = 0; i < results.features.length; i++) {
+                var coords = results.features[i].geometry.coordinates;
+                var latLng = new google.maps.LatLng(coords[1], coords[0]);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            }
+        }
 
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVf591AZ-evHODFReCvcQ56eAJZecmLgc&callback=initMap">
