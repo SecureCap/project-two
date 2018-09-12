@@ -1,6 +1,10 @@
+//dependencies
 const express = require('express');
+const Flickr = require("flickrapi");
 
 const router = express.Router();
+
+//
 
 router.get("/api/gallery", (req, res) => {
     res.send("muahahahaha TO BE DEVELOPED!!")
