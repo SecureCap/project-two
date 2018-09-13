@@ -19,8 +19,8 @@
 </div>
 
 <script>
-    
-    $("#login-form").submit(function(e) {
+
+    $("#login-form").submit(function (e) {
         $.ajax({
             method: "POST",
             url: "/api/login",
@@ -28,12 +28,12 @@
                 username: $("#username").val(),
                 password: $("#password").val()
             }
-        }).done(function(response) {
+        }).done(function (response) {
             location.replace("/gallery");
         })
-        .fail(function(err) {
-            alert("login failed");
-        });
+            .fail(function (err) {
+                alert("login failed");
+            });
     });
 
 </script>
