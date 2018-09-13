@@ -1,40 +1,43 @@
 /* body and main below are for sticky footer */
 /* gold from logo = #C5A343 */
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 main {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
 .gold {
-    background-color: #C5A343;
+  background-color: #c5a343;
 }
 
 .container.main {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
 .map {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .logo {
-    height: 100%;
+  height: 100%;
 }
 
-/* .tabs .tab a.active {
-    color: blue;
+.tab a {
+  /* color: rgb(252, 234, 37) !important; */
+  background-color: #c5a343 !important;
+}
+
+.tab a.active {
+  /* color: #d7c07d !important; */
+  background-color: #d7c07d !important;
 }
 
 .tabs .tab a:hover {
-    color: blue;
+  /* color: #b69538 !important; */
+  background-color: #b69538 !important;
 }
-
-.tabs .tab a {
-    color: blue;
-} */
