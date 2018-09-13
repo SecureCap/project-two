@@ -12,8 +12,6 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 
-
-
 const app = express();
 
 // Put on your helmet and buckle up bub.
