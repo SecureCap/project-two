@@ -1,4 +1,5 @@
 /* body and main below are for sticky footer */
+/* gold from logo = #C5A343 */
 body {
     display: flex;
     min-height: 100vh;
@@ -9,15 +10,31 @@ main {
     flex: 1 0 auto;
 }
 
-.nav {
-    background-color: #42a5f5 !important;
+.gold {
+    background-color: #C5A343;
+}
+
+.container.main {
+    flex: 1 0 auto;
 }
 
 .map {
     width: 100%;
     height: auto;
 }
+
 .logo {
-  width: 30%; 
-  
+    height: 100%;
 }
+
+/* .tabs .tab a.active {
+    color: blue;
+}
+
+.tabs .tab a:hover {
+    color: blue;
+}
+
+.tabs .tab a {
+    color: blue;
+} */
