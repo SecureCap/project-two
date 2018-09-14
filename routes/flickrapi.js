@@ -18,6 +18,66 @@ API URL: http://127.0.0.1:3000/service/rest/flickr.method.name
 
 */
 
+/* 
+$.ajax({
+url: 'https://api.flickr.com/services/rest/',
+dataType: 'jsonp',
+data: {
+"method":"flickr.photos.search",
+"user_id":"34210875@N06",
+"format":"json",
+"tags":"featured",
+"tag_mode": "any",
+}
+});
+
+
+function FlickrPhoto(title, owner, flickrURL, imageURL) {
+    this.title = title;
+    this.owner = owner;
+    this.flickrURL = flickrURL;
+    this.imageURL = imageURL;
+}
+
+function FlickrService() {
+    this.flickrApiKey = "763559574f01aba248683d2c09e3f701";
+    this.flickrGetInfoURL = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&nojsoncallback=1&format=json";
+
+    this.getPhotoInfo = function(photoId, callback) {
+        var ajaxOptions = {
+            type: 'GET',
+            url: this.flickrGetInfoURL,
+            data: { api_key: this.flickrApiKey, photo_id: photoId },
+            dataType: 'json',
+            success: function (data) { 
+                if (data.stat == "ok") {
+                    var photo = data.photo;
+                    var photoTitle = photo.title._content;
+                    var photoOwner = photo.owner.realname;
+                    var photoWebURL = photo.urls.url[0]._content;
+                    var photoStaticURL = "https://farm" + photo.farm + ".staticflickr.com/" +  photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
+
+                    var flickrPhoto = new FlickrPhoto(photoTitle, photoOwner, photoWebURL, photoStaticURL);
+                    callback(flickrPhoto);
+                }
+            }
+        };
+
+        $.ajax(ajaxOptions);
+    }
+}
+
+var photoId = "11837138576";
+var flickrService = new FlickrService();
+flickrService.getPhotoInfo(photoId, function(photo) {
+    console.log(photo.imageURL);
+    console.log(photo.owner);
+});
+
+
+
+*/
+
 
 
 
@@ -183,6 +243,78 @@ API URL: http://127.0.0.1:3000/service/rest/flickr.method.name
 // };
 
 // exports.FlickrAPI = FlickrAPI;
+
+
+
+$(document).ready(function () {
+    function FlickrPhoto(title, owner, flickrURL, imageURL) {
+        this.title = title;
+        this.owner = owner;
+        this.flickrURL = flickrURL;
+        this.imageURL = imageURL;
+    };
+
+
+function FlickrService() {
+this.flickrApiKey = "0bcc8225757ff024f45d0b16c6718031";
+this.flickrGetInfoURL = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&nojsoncallback=1&format=json";
+
+this.getPhotoInfo = function(photoId, callback) {
+    var ajaxOptions = {
+        type: 'GET',
+        url: this.flickrGetInfoURL,
+        data: { api_key: this.flickrApiKey, photo_id: photoId },
+        dataType: 'json',
+        success: function (data) { 
+            if (data.stat == "ok") {
+                var photo = data.photo;
+                var photoTitle = photo.title._content;
+                var photoOwner = photo.owner.realname;
+                var photoWebURL = photo.urls.url[0]._content;
+                var photoStaticURL = "https://farm" + photo.farm + ".staticflickr.com/" +  photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
+
+                var flickrPhoto = new FlickrPhoto(photoTitle, photoOwner, photoWebURL, photoStaticURL);
+                callback(flickrPhoto);
+            }
+        }
+    };
+
+    $.ajax(ajaxOptions);
+ }.thenn(response => {
+     for (i = 0; i < response.PhotoList.length; i++) {
+          var imgCont = '<div class="image-container" style="background: url(' + photoURL + ');"><div class="image-info"><p class="top"><a class="title" href="http://www.flickr.com/photos/' + data.photo.owner.nsid + '/' + photoID + '">' + data.photo.title._content + '</a> <span class="author">by <a href="http://flickr.com/photos/' + data.photo.owner.nsid + '">' + data.photo.owner.username + '</a></span></p><div class="bottom"><p><span class="infoTitle">Comments:</span> ' + data.photo.comments._content + '</p>';
+                        
+                        //if there are tags associated with the image
+                        if (typeof(tags) != 'undefined') {
+                        
+                            //combine the tags with an html snippet and add them to the end of the 'imgCont' variable
+                            imgCont += '<p><span class="infoTitle">Tags:</span> ' + tags + '</p>';
+                        }
+                        
+                        //if the image has geo location information associate with it
+                        if(typeof(pLocation) != 'undefined'){
+                        
+                            //combine the geo location data into an html snippet and at that to the end fo the 'imgCont' variable
+                            imgCont += '<p><span class="infoTitle">Location:</span> ' + pLocation + '</p>';
+                        }
+                        
+                        //add the description & html snippet to the end of the 'imgCont' variable
+                        imgCont += '<p><span class="infoTitle">Decription:</span> ' + data.photo.description._content + '</p></div></div>';
+                        
+                        //append the 'imgCont' variable to the document
+                        $(imgCont).appendTo('#test1');
+                        
+                        //delete the pLocation global variable so that it does not repeat
+                        delete pLocation;
+                    });
+                    
+                });
+            });
+     }
+ })
+}
+});
+});
 
 
 

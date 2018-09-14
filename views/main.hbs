@@ -19,8 +19,8 @@
     <nav class="grey darken-3">
         <div class="nav-wrapper">
             <form>
-                <div class="input-field">
-                    <input id="search" type="search" required>
+                <div class="input-field" id="search-div">
+                    <input id="search" type="search" name="hashtag" required>
                     <label class="label-icon" for="search">
                         <i class="material-icons">search</i>
                     </label>
@@ -70,8 +70,7 @@
 </div>
 
 <script>
-
-    $(document).ready(function () {
+     $(document).ready(function () {
         $('.materialbox').materialbox();
 
     });
@@ -80,7 +79,41 @@
         $('.tabs').tabs();
     });
 
+    // when user keys on enter after input info into the submit button
+   $(document).ready(function() {
+       $(document).on('keypress', function(event) {
+           if (event.keyCode === 13) {
+               console.log("youre in the sauce");
+           }
+           var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=" + $("#search").val();
+                $.ajax({
+                url: flickerAPI,
+                dataType: "jsonp", // jsonp
+                jsonpCallback: 'jsonFlickrFeed', // add this property
+                success: function (result, status, xhr) {
+                $.each(result.items, function (i, item) {
+                $("<img>").attr("src", item.media.m).appendTo("#testDiv");
+                if (i === 5) {
+                return false;
+                }
+                });
+                },
+                error: function (xhr, status, error) {
+                console.log(xhr)
+                $("#testDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+        });
+    });
+});
+   
+         
+   
+
+    
+
+    
+
 </script>
 
 
-{{!-- not pulling logo and css from main --}}
+//{{!-- not pulling logo and css from main --}}
