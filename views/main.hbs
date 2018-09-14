@@ -85,6 +85,9 @@
            if (event.keyCode === 13) {
                console.log("youre in the sauce");
            }
+           /* On the success callback function I have used .each() method to loop through the contents and show the first 5 images on the outputDiv.
+            Also see how I have appended the search text value to the url field.*/
+           
            var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=" + $("#search").val();
                 $.ajax({
                 url: flickerAPI,
