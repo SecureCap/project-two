@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
@@ -19,11 +18,23 @@
   },
   "homepage": "https://github.com/SecureCap/project-two#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
     "eslint": "^5.5.0",
     "express": "^4.16.3",
+    "express-flickr-gallery": "^0.3.0",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "flickrapi": "^0.6.0",
+    "helmet": "^3.13.0",
+    "mysql": "^2.16.0",
     "mysql2": "^1.6.1",
-    "sequelize": "^4.38.0"
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "sequelize": "^4.38.0",
+    "stringify-object": "^3.2.2"
   }
 }

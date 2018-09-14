@@ -1,2 +1,5 @@
 node_modules
 .DS_Store
+api_key.txt
+api_secret.txt
+data

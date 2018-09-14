@@ -1,0 +1,50 @@
+<div class="row">
+    {{error}}
+
+    {{#if error}}
+        <div style="border: 1px solid red;">
+            <p>{{error}}</p>
+        </div>
+    {{/if}}
+    <h1>Sign Up for an Account</h1>
+    <form class="col s12" id="signup-form">
+        <div class="row">
+            <div class="input-field col s12">
+                <input placeholder="Enter your email address" id="username" type="text" class="validate">
+                <label for="first_name">User Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" id="login" type="submit">Sign Up
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+</div>
+
+<script>
+    
+    $("#signup-form").submit(function(e) {
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/api/signup",
+            data: {
+                username: $("#username").val(),
+                password: $("#password").val()
+            }
+        })
+        .done(function(res) {
+            location.replace(res);
+        })
+        //.fail(function(err) {
+        //    alert(JSON.stringify(err, null, 2));
+        //    location.replace("/invalid");
+        //});
+    });
+
+</script>

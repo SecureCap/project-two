@@ -1,0 +1,38 @@
+<script>
+    $(document).ready(function () {
+        $('.materialboxed').materialbox();
+    });
+</script>
+
+<!-- Image Gallery -->
+
+    {{!-- <h1>Materialize Image Gallery</h1> --}}
+{{!-- {{#each pictures}}
+    <div class="card small photo-card">
+        <div class="card-image">
+            <img class="" src="https://farm{{this.farm}}.staticflickr.com/{{this.server}}/{{this.id}}_{{this.secret}}_m.jpg">
+            <a class="btn-floating halfway-fab waves-effect waves-light gold"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+            <p>{{this.title}}</p>
+        </div>
+    </div>
+{{/each}} --}}
+
+
+<div class="row" id="gallery-row">
+    {{#each pictures}}
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <img class="" src="https://farm{{this.farm}}.staticflickr.com/{{this.server}}/{{this.id}}_{{this.secret}}_c.jpg">
+                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">thumb_up</i></a>
+                </div>
+                <div class="card-content">
+                    <p>{{this.title}}</p>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
+            

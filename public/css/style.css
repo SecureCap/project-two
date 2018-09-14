@@ -1,0 +1,54 @@
+/* body and main below are for sticky footer */
+/* gold from logo = #C5A343 */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+  padding: 0 auto;
+}
+
+.gold {
+  background-color: #c5a343;
+}
+
+.container.main {
+  flex: 1 0 auto;
+}
+
+.map {
+  width: 100%;
+  height: auto;
+}
+
+.logo {
+  height: 100%;
+}
+
+.tab a {
+  /* color: rgb(252, 234, 37) !important; */
+  background-color: #c5a343 !important;
+}
+
+.tab a.active {
+  /* color: #d7c07d !important; */
+  background-color: #d7c07d !important;
+}
+
+.tabs .tab a:hover {
+  /* color: #b69538 !important; */
+  background-color: #b69538 !important;
+}
+
+.photo-card {
+  /* margin-left: 3em; */
+} 
+
+#test1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
