@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
+const Flickr = require('flickrapi');
 const apiRoutes = require('./routes/api-routes');
-const htmlRoutes = require('./routes/html-routes');
 const passport = require('./config/passport');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -51,8 +51,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Setup routes
-app.use(apiRoutes);
-app.use(htmlRoutes);
+const flickrOptions = {
+    api_key: "0bcc8225757ff024f45d0b16c6718031",
+    secret: "e709b11b283d4dcc"
+};
+
+// 
+Flickr.tokenOnly(flickrOptions, (err, flickr) => {
+    if (err) throw err;
+    require('./routes/html-routes')(flickr, app);
+    require('./routes/api-routes')(flickr, app);
+});
+
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -63,3 +73,5 @@ db.sequelize.sync({
         console.log(`Server listening on port ${PORT}`)
     });
 });
+
+module.exports = app;
