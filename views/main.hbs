@@ -18,7 +18,7 @@
     {{!-- search bar --}}
     <nav class="grey darken-3">
         <div class="nav-wrapper">
-            <form>
+            <form id="search-form">
                 <div class="input-field">
                     <input id="search" type="search" required>
                     <label class="label-icon" for="search">
@@ -30,19 +30,25 @@
         </div>
     </nav>
 
-    {{!-- tabs --}}
     <div class="container main">
+        {{!-- tabs --}}
         <div class="row">
-            <div class="col s12">
-                <ul class="tabs">
-                    {{!-- <div class="indicator yellow" style="z-index:1"></div> --}}
-                    <li class="tab col s4"><a id="tab" class="active black-text" href="#test1">Gallery</a></li>
-                    <li class="tab col s4"><a class="black-text" href="#test2">Map</a></li>
-                    <li class="tab col s4"><a class="black-text" href="#test3">Log In</a></li>
-                    {{!-- <li class="tab col s3"><a href="#test4">Tab 4</a></li> --}}
-                </ul>
-            </div>
-            <div id="test1" class="col s12"> {{#> gallery}} {{/ gallery}} </div>
+            <ul class="tabs">
+                <li class="tab col s4">
+                    <a id="tab" class="active black-text" href="#test1">Gallery</a>
+                </li>
+                <li class="tab col s4">
+                    <a class="black-text" href="#test2">Map</a>
+                </li>
+                <li class="tab col s4">
+                    <a class="black-text" href="#test3">Log In</a>
+                </li>
+            </ul>
+        </div>
+        
+        {{!-- main container --}}
+        <div class="row">
+            <div id="test1" class="col s12"> {{#> gallery this}} {{/ gallery}} </div>
             <div id="test2" class="col s12"> {{#> maps}} {{/ maps}} </div>
             <div id="test3" class="col s12"> {{#> login}} {{/ login}} </div>
         </div>
@@ -54,14 +60,7 @@
             <div class="row">
                 <div class="col l6 s12">
                     <h5 class="white-text">Footer Content</h5>
-                    {{!-- <p class="grey-text text-lighten-4">You can use rows and columns here to organize your
-                        footer
-                        content.</p> --}}
                 </div>
-                {{!-- <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-
-                </div> --}}
             </div>
         </div>
         {{!-- below div adds extened footer --}}
@@ -78,6 +77,59 @@
     // .tabs must be seperate. dont combine
     $(document).ready(function () {
         $('.tabs').tabs();
+    });
+
+    $("#search-form").submit(function(e) {
+        e.preventDefault();
+        var searchTerm = $("#search").val().trim();
+        $.ajax({
+            url: "/api/search/" + searchTerm,
+            method: "get",
+        }).then(function(photos) {
+            $("#gallery-row").empty();
+            photos.forEach(function(photo) {
+                /**
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                        <img src="https://farm{{this.farm}}.staticflickr.com/{{this.server}}/{{this.id}}_{{this.secret}}_c.jpg">
+                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="card-content">
+                            <p>{{this.title}}</p>
+                        </div>
+                    </div>
+                </div>
+                **/
+                var photoColEl = $("<div>").attr("class", "col s12 m6");
+                var cardEl = $("<div>").attr("class", "card");
+                var cardImageEl = $("<div>").attr("class", "card-image");
+                var imgEl = $("<img>").attr("src", `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_c.jpg`);
+                var button = $("<a>")
+                    .attr("class", "btn-floating halfway-fab waves-effect waves-light red");
+                var iconEl = $("<i>").attr("class", "material-icons").html("thumb_up");
+                var cardContentEl = $("<div>").attr("class", "card-content");
+                var titleEl = $("<p>").text(photo.title);
+
+                cardContentEl.append(titleEl);
+                
+                button.append(iconEl);
+
+                cardImageEl
+                    .append(imgEl)
+                    .append(button);
+
+                cardEl
+                    .append(cardImageEl)
+                    .append(cardContentEl);
+
+                photoColEl
+                    .append(cardEl)
+                
+                console.log(photoColEl);
+                $("#gallery-row").append(photoColEl);
+            });
+        });
     });
 
 </script>

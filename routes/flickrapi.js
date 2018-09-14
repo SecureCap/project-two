@@ -17,8 +17,20 @@ API URL: http://127.0.0.1:3000/service/rest/flickr.method.name
     "access_token": { "oauth_token": "72157700911505614-7613f3f7784ec5d2", "oauth_token_secret": "7ee90de4783c35ed" } }, "stat": "ok" }
 
 */
+module.exports = () => {
+    const Flickr = require('flickrapi');
+    let flickr;
+    const flickrOptions = {
+        api_key: "0bcc8225757ff024f45d0b16c6718031",
+        secret: "e709b11b283d4dcc"
+    };
 
+    Flickr.tokenOnly(flickrOptions, (error, flickrObj) => {
+        flickr = flickrObj;
+    });
 
+    return flickr;
+};
 
 
 

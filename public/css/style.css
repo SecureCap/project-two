@@ -6,8 +6,9 @@ body {
   flex-direction: column;
 }
 
-main {
+.main {
   flex: 1 0 auto;
+  padding: 0 auto;
 }
 
 .gold {
@@ -40,4 +41,14 @@ main {
 .tabs .tab a:hover {
   /* color: #b69538 !important; */
   background-color: #b69538 !important;
+}
+
+.photo-card {
+  /* margin-left: 3em; */
+} 
+
+#test1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
